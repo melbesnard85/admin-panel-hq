@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.3.0",
     "apexcharts": "^3.37.0",
     "jsvectormap": "^1.5.1",
     "localforage": "^1.10.0",
