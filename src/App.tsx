@@ -14,6 +14,7 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import Task from './pages/Task';
 
 function App() {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
@@ -34,7 +35,8 @@ function App() {
   return isAuthenticated ? (
     <>
       <Routes>
-        <Route path="/" element={<ECommerce />} />
+        <Route path="/" element={<Task />} />
+        <Route path="/ecommerce" element={<ECommerce />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/forms/form-elements" element={<FormElements />} />
