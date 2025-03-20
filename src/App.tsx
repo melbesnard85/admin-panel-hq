@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
@@ -15,24 +16,22 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const preloader = document.getElementById('preloader');
-
-  if (preloader) {
-    setTimeout(() => {
-      preloader.style.display = 'none';
-      setLoading(false);
-    }, 2000);
-  }
-
+  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+    const preloader = document.getElementById('preloader');
+    if (!isLoading) {
+      if (!isAuthenticated) {
+        loginWithRedirect();
+      }
+      setTimeout(() => {
+        if (preloader) {
+          preloader.style.display = 'none';
+        }
+      }, 500);
+    }
+  }, [isAuthenticated, isLoading, loginWithRedirect]);
 
-  return loading ? (
-    <p className=" text-center text-danger">Failed to lead app</p>
-  ) : (
+  return isAuthenticated ? (
     <>
       <Routes>
         <Route path="/" element={<ECommerce />} />
@@ -49,7 +48,7 @@ function App() {
         <Route path="/auth/signup" element={<SignUp />} />
       </Routes>
     </>
-  );
+  ) : <></>;
 }
 
 export default App;
